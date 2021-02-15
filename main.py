@@ -8,7 +8,31 @@ import datetime
 import sqlite3
 
 DATABASE_LOCATION = "sqlite://played_tracks.sqlite"
-TOKEN = "BQDNf9396JSJntm6onR6BFcwfkHsiis5hgwlPOkQvuEt9RbKXyXxDeADKXkHJ01rgmenivyvL6uak6-5EB6oA5-tGUG0Gkfun0qI_RhwewuQP4RKAnUDN9dGhYRfqFx1JFEnZdeIxX7HDYKtvAg_zw"
+TOKEN = "BQBhUX4NJBojYKveeqnYapLriqfltABqMtqmblIF9UsLPSvBGY-qYCZDoIG6oJ1hlz6NZBivp3vYAtBU0kom3wuKJJsybt1yk8xMjz1tbR2yiOZ4BO8hK1GNJs4dtUd6OrtGwrsyGjLLjE1-r-JLZQ"
+
+def check_if_valid_data(df: pandas.DataFrame) -> bool:
+    if df.empty:
+        print("No songs downloaded.")
+        return False
+    
+    if pandas.Series(df["played_at"]).is_unique:
+        pass
+    else:
+        raise Exception("Priamry Key check is violated")
+
+    if df.isnull().values.any():
+        raise Exception("Null values found")
+
+    # yesterday = datetime.datetime.now() - datetime.timedelta(days=1)
+    # yesterday = yesterday.replace(hour=0,minute=0,second=0,microsecond=0)
+
+    # timestamps = df["timestamp"].tolist()
+    # for ts in timestamps:
+    #     if datetime.datetime.strptime(ts, "%Y-%m-%d") != yesterday:
+    #         raise Exception("At least one of the returned songs does not have a yesterday's timestamp")
+
+    return True
+
 
 if __name__ == "__main__":
 
@@ -49,3 +73,6 @@ if __name__ == "__main__":
     song_df = pandas.DataFrame(song_dict, columns=["song_name", "artist_name", "played_at", "timestamp"])
 
     print(song_df)
+
+    if check_if_valid_data(song_df):
+        print("Data valid")
