@@ -8,7 +8,7 @@ import datetime
 import sqlite3
 
 DATABASE_LOCATION = "sqlite:///played_tracks.sqlite"
-TOKEN = "BQDPCEFJP1Ukca34pQt84gP8FhSYpPckA2eI1hmwhud3lYoi2Uh6S_fnZ8Zp5kK4IhE6mB1YaXDVhE0jEIU7R-zL540kX_wLyoOWXUKEZXPapGQchy78Rclm02dfQZ54SIw8F53FSHBTL9o1Y1NK8A"
+TOKEN = "BQBxO3rV8UCRVrgCsMfsEXZ2nwrwsAvBN3oD_F_9O8x4EaIbYyU5zMtcipz6x77JW5EWT5RYgN-uo_X1voNVB0OpFkywirqdigqI0t_IUvm7M7ntc5ixb-_hol926TI8-Dq34RzXBnCY44jhwUJDmg"
 
 def check_if_valid_data(df: pandas.DataFrame) -> bool:
     if df.empty:
