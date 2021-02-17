@@ -7,8 +7,8 @@ from datetime import datetime, time
 import datetime
 import sqlite3
 
-DATABASE_LOCATION = "sqlite://played_tracks.sqlite"
-TOKEN = "BQBhUX4NJBojYKveeqnYapLriqfltABqMtqmblIF9UsLPSvBGY-qYCZDoIG6oJ1hlz6NZBivp3vYAtBU0kom3wuKJJsybt1yk8xMjz1tbR2yiOZ4BO8hK1GNJs4dtUd6OrtGwrsyGjLLjE1-r-JLZQ"
+DATABASE_LOCATION = "sqlite:///played_tracks.sqlite"
+TOKEN = "BQDPCEFJP1Ukca34pQt84gP8FhSYpPckA2eI1hmwhud3lYoi2Uh6S_fnZ8Zp5kK4IhE6mB1YaXDVhE0jEIU7R-zL540kX_wLyoOWXUKEZXPapGQchy78Rclm02dfQZ54SIw8F53FSHBTL9o1Y1NK8A"
 
 def check_if_valid_data(df: pandas.DataFrame) -> bool:
     if df.empty:
@@ -75,14 +75,14 @@ if __name__ == "__main__":
 
     if check_if_valid_data(song_df):
         print("Data valid")
-        print(song_df)
+        # print(song_df)
 
     engine  = sqlalchemy.create_engine(DATABASE_LOCATION)
     connection = sqlite3.connect("played_tracks.sqlite")
     cursor = connection.cursor()
 
     sql_query = """
-    CREATE TABLE IF NOT EXISTS my_played_tracks(
+    CREATE TABLE IF NOT EXISTS played_tracks(
         song_name VARCHAR(200),
         artist_name VARCHAR(200),
         played_at VARCHAR(200),
@@ -94,4 +94,11 @@ if __name__ == "__main__":
     cursor.execute(sql_query)
     print("Opened database successfuly")
 
-    
+    try:
+        song_df.to_sql("played_tracks", engine, index=False, if_exists='append')
+        print("Added to database successfully")
+    except:
+        print("Data already exists")
+
+    connection.close()
+    print("Database closed successfully")
