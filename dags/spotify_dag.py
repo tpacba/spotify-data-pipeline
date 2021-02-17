@@ -4,6 +4,7 @@ from airflow.operators.python import task
 from airflow.operators.python_operator import PythonOperator
 from airflow.utils.dates import days_ago
 from airflow.utils.timezone import datetime
+from spotify_etl import run_spotify_etl
 
 default_args = {
     "owner": 'airflow',
@@ -28,7 +29,7 @@ def success_print():
 
 run_etl = PythonOperator(
     task_id="whole_spotify_etl",
-    python_callable=success_print,
+    python_callable=run_spotify_etl,
     dag=dag
 )
 
